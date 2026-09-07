@@ -26,6 +26,19 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
+          
+      - name: Show project structure
+        run: |
+          echo "=== repo root ==="
+          ls -la
+          echo "=== app folder ==="
+          ls -la app 2>/dev/null || echo "NO app FOLDER"
+          echo "=== app/build.gradle ==="
+          cat app/build.gradle 2>/dev/null || echo "MISSING app/build.gradle"
+          echo "=== source files ==="
+          find app/src -type f 2>/dev/null || echo "NO app/src"
+          echo "=== gradle projects ==="
+          gradle projects --no-daemon
 
       - name: Build release APK
         run: gradle assembleRelease --no-daemon --stacktrace
